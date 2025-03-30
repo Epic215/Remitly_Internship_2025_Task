@@ -2,7 +2,7 @@ package com.remitly.Task.service;
 
 import com.remitly.Task.model.SwiftCode;
 import com.remitly.Task.repository.SwiftCodeRepository;
-import dataCSVParser.DataCSVParser;
+import com.remitly.Task.dataCSVParser.DataCSVParser;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,4 +1,4 @@
-package dataCSVParser;
+package com.remitly.Task.dataCSVParser;
 
 import com.remitly.Task.model.SwiftCode;
 import org.apache.commons.csv.CSVFormat;
