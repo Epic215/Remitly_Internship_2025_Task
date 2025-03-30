@@ -21,6 +21,7 @@ services:
         - spring.datasource.url=jdbc:postgresql://postgres_db:5432/swiftCodes
         - spring.datasource.username=task
         - spring.datasource.password=task1234
+        - spring.jpa.hibernate.ddl-auto = update
     depends_on:
       - postgres_db
 volumes:
