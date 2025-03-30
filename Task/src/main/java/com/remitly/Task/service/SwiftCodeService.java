@@ -53,12 +53,12 @@ public class SwiftCodeService {
                     swiftCodeData.getBankName(),
                     swiftCodeData.getCountryISO2(),
                     swiftCodeData.getCountryName(),
-                    true,
+                    swiftCodeData.isHQ(),
                     swiftCodeData.getSwiftCode(),
                     branches);
         }
         else{
-            throw new NoSuchElementException("Swift Code does not exist");
+            throw new IllegalArgumentException("Swift Code does not exist");
         }
 
     }
@@ -76,11 +76,11 @@ public class SwiftCodeService {
     }
 
     public void addNewSWIFT(RequestDTO swiftCodeDTO) {
-        SwiftCode swiftCode = new SwiftCode(swiftCodeDTO.swiftCode(), swiftCodeDTO.bankName(),swiftCodeDTO.countryISO2(),
+        SwiftCode swiftCode = new SwiftCode(swiftCodeDTO.swiftCode().toUpperCase(), swiftCodeDTO.bankName(),swiftCodeDTO.countryISO2(),
                                 swiftCodeDTO.countryName(), swiftCodeDTO.address(), swiftCodeDTO.isHeadquarter());
 
         if (swiftCode.isHQ() != swiftCode.getSwiftCode().endsWith("XXX")){
-            throw new IllegalArgumentException("Swift Code is wrong to the isHeadquarter");
+            throw new IllegalArgumentException("Field isHeadquarter is incorrect to swiftCode field");
         }
         if (!swiftCodeRepository.existsById(swiftCode.getSwiftCode())) {
             swiftCodeRepository.save(swiftCode);
@@ -95,29 +95,8 @@ public class SwiftCodeService {
             swiftCodeRepository.deleteById(swiftCode);
         }
         else{
-            throw new NoSuchElementException("Swift Code does not exist");
+            throw new IllegalArgumentException("Swift Code does not exist");
         }
-    }
-
-
-
-
-
-
-    // initialization of data to swiftCodes database from given csv file
-    @PostConstruct
-    public void initializeDataInDatabase() {
-        String csvData = "Interns_2025_SWIFT_CODES.csv";
-        ArrayList<SwiftCode> swiftCodes = DataCSVParser.csvToSwiftCode(csvData);
-        if (!swiftCodes.isEmpty()) {
-            swiftCodeRepository.saveAll(swiftCodes);
-            System.out.println("Successfully loaded " + swiftCodes.size() + " csv data");
-        }
-        else{
-            System.out.println("No swift codes data found");
-        }
-
-
     }
 
 
